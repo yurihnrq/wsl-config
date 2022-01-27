@@ -1,5 +1,5 @@
-# Configuração do Fedora no WSL
-Este repositório contém o passo a passo para as configurações que devo realizar para configurar um ambiente de desenvolvimento no WSL utilizando o Fedora como distribuição Linux.
+# Configuração do Ubuntu no WSL
+Este repositório contém o passo a passo para as configurações que devo realizar para configurar um ambiente de desenvolvimento no WSL utilizando o Ubuntu como distribuição Linux.
 
 ## Sumário
 * [Instalação e configuração inicial](#Instalação-e-configuração-inicial)
