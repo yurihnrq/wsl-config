@@ -240,9 +240,6 @@ Devem ser adicionadas no final do arquivo .bashrc (caso utilize o BASH) ou .zshr
 ```bash
 # A função la() já vem implementada no ZSH. Defino ela somente em .bashrc
 la() { ls -a "$@"; }
-lla() { ll -a "$@"; }
-alias cls="clear"
-alias exp="explorer.exe ."
 # wtnt abrirá uma nova aba no Windows terminal no diretório passado como argumento. 
 # Utilizará o perfil padrão e abrirái o diretória atual caso seja passado um diretório inválido
 wtnt() {
@@ -253,27 +250,32 @@ wtnt() {
     if [ -d "$@" ]
     then
       # Checa se argumento é um symlink.
-      if [ -L "$LINK_OR_DIR" ];
+      if [ -L "$@" ];
       then
         # Caso argumento seja um symlink, apresenta mensagem de erro. wt.exe não pode ser iniciado com symlink.
         echo "wtnt: cannot start Windows Terminal using a symlink as directory.";
+        return;
       fi
-      # Se argumento for um diretório válido, abre wt.exe no diretório informado.
+      # Se argumento for um diretório válido, abre wt.exe no diretório informado. 
       wt.exe -w 0 nt -d "$@";
-    # Se argumento não for um diretório válido, abre wt.exe no diretório atual.
+      return;
     else
-      wt.exe -w 0 nt -d .;
+      # Se argumento não for um diretório válido, exibe mensagem de erro.
+      echo "wtnt: cannot start a Windows Terminal tab at \"$@\".";
+      return;
     fi
   else
     # Caso nenhum argumento seja passado, abre wt.exe no diretório atual.
     wt.exe -w 0 nt -d .;
+    return;
   fi
 }
+alias cls="clear"
+alias exp="explorer.exe ."
 alias wps="pwsh.exe -nologo"
 # Usar wps="powershell.exe -nologo" se o PS 7 não estiver instalado.
 alias wslip="ifconfig eth0 | grep 'inet '"
 alias winip="ipconfig.exe | grep -m 1 'IPv4 Address'"
-
 ```
 ## Acesso LAN
 O WSL vem por padrão com uma interface de rede NAT. Isso significa que ele pode acessar recursos exteros, mas tem seu IP mascarado pelo host. Desse modo, computador na LAN não conseguem se comunicar com o WSL.
