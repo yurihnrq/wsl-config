@@ -243,10 +243,13 @@ la() { ls -a "$@"; }
 lla() { ll -a "$@"; }
 alias cls="clear"
 alias exp="explorer.exe ."
+# wtcd abrirá uma nova aba no Windows terminal no diretório da aba atual. Utilizará o perfil padrão.
+alias wtcd="wt.exe -w 0 nt -d ."
 alias wps="pwsh.exe -nologo"
 # Usar wps="powershell.exe -nologo" se o PS 7 não estiver instalado.
 alias wslip="ifconfig eth0 | grep 'inet '"
 alias winip="ipconfig.exe | grep -m 1 'IPv4 Address'"
+
 ```
 ## Acesso LAN
 O WSL vem por padrão com uma interface de rede NAT. Isso significa que ele pode acessar recursos exteros, mas tem seu IP mascarado pelo host. Desse modo, computador na LAN não conseguem se comunicar com o WSL.
