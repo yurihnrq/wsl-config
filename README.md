@@ -270,6 +270,28 @@ wtnt() {
     return;
   fi
 }
+# wtsp realiza o mesmo que wtnt só que abre a nova instância de wt.exe em split-pane.
+wtsp() {
+  if [ $# -ge 1 ]
+  then
+    if [ -d "$@" ]
+    then
+      if [ -L "$@" ];
+      then
+        echo "wtnt: cannot start Windows Terminal using a symlink as directory.";
+        return;
+      fi
+      wt.exe -w 0 sp -d "$@";
+      return;
+    else
+      echo "wtnt: cannot start Windows Terminal at \"$@\".";
+      return;
+    fi
+  else
+    wt.exe -w 0 sp -d .;
+    return;
+  fi
+}
 alias cls="clear"
 alias exp="explorer.exe ."
 alias wps="pwsh.exe -nologo"
