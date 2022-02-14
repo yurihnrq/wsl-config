@@ -292,8 +292,28 @@ wtsp() {
     return;
   fi
 }
+exp() {
+  if [ $# -ge 1 ]
+  then
+    if [ -d "$@" ]
+    then
+      if [ -L "$@" ]
+      then
+        echo "exp: cannot open Windows Explorer using a symlink as directory.";
+        return;
+      fi
+      explorer.exe `wslpath -w $@`;
+      return;
+    else
+      echo "exp: $@ is not a directory.";
+      return;
+    fi
+  else
+    explorer.exe .;
+    return;
+  fi
+}
 alias cls="clear"
-alias exp="explorer.exe ."
 alias wps="pwsh.exe -nologo"
 # Usar wps="powershell.exe -nologo" se o PS 7 não estiver instalado.
 alias wslip="ifconfig eth0 | grep 'inet '"
