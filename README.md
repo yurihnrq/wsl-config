@@ -48,7 +48,7 @@ Primeiramente, instalo o tema Dracula no meu Windows Terminal.
 O passo a passo para este processo pode ser encontrado no <a href="https://draculatheme.com/windows-terminal" target="_blank">site oficial</a>.
 
 ### Profile JSON
-A seguir segue as configurações que eu modifico no profile do Ubunru no Windows Terminal. Você deve modificá-las conforme o gosto/necessidade:
+A seguir segue as configurações que eu modifico no profile do Ubuntu no Windows Terminal. Você deve modificá-las conforme o gosto/necessidade:
 ```json
 {
 	// Outras configurações aqui em cima...
@@ -127,7 +127,7 @@ export SPACESHIP_PACKAGE_SHOW=false
 ### Plugins
 Eu utilizo dois plugins: [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) que nos fornece um autocomplete baseado no histórico de comandos do shell e [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) que adiciona syntax highlighting ao ZSH.
 
-Para instalar os plugins, devemos rodas os seguintes comandos (no usário que desejamos utilizar os plugins):
+Para instalar os plugins, devemos rodas os seguintes comandos (no usuário que desejamos utilizar os plugins):
 ```bash
 # Clona repositório do zsh-autosuggestions para o diretório de plugins do ZSH.
 git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions";
@@ -320,7 +320,7 @@ alias wslip="ifconfig eth0 | grep 'inet '"
 alias winip="ipconfig.exe | grep -m 1 'IPv4 Address'"
 ```
 ## Acesso LAN
-O WSL vem por padrão com uma interface de rede NAT. Isso significa que ele pode acessar recursos exteros, mas tem seu IP mascarado pelo host. Desse modo, computador na LAN não conseguem se comunicar com o WSL.
+O WSL vem por padrão com uma interface de rede NAT. Isso significa que ele pode acessar recursos exteros, mas tem seu IP mascarado pelo host. Desse modo, computadores na LAN não conseguem se comunicar com o WSL.
 
 A solução para este problema foi disponibilizada por um usuário <a href="https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723" target="_blank">nesta issue</a> no GitHub.
 Para criar uma solução de fácil acesso, sigo os seguintes passos:
