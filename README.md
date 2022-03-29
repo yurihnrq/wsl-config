@@ -122,6 +122,7 @@ export SPACESHIP_PROMPT_ADD_NEWLINE=false
 export SPACESHIP_DIR_TRUNC=1
 # SPACESHIP_PACKAGE_SHOW configura a exibição da versão da aplicação lida em arquivos de configuração.
 export SPACESHIP_PACKAGE_SHOW=false
+export SPACESHIP_CHAR_SYMBOL="zsh ➜ "
 ```
 
 ### Plugins
