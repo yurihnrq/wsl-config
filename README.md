@@ -13,7 +13,7 @@ Este repositório contém o passo a passo para as configurações que devo reali
     - [Habilitar tema](#Habilitar-tema)
     - [Observação](#Observação-1)
     - [Personalização do tema](#Personalização-do-tema)
-  + [Plguins](#Plugins)
+  + [Plugins](#Plugins)
 * [Instalação de pacotes](#Instalação-de-pacotes)
   - [Observação](#Observação-2)
   + [Git & GitHub](#Git--GitHub)
@@ -70,9 +70,8 @@ Para instalá-lo no Ubuntu, basta rodarmos os comandos:
 # O pacote util-linux-user pode ser necessário para modificar o shell padrão do sistema.
 sudo apt install -y git zsh;
 # Baixa e executa o script para configuração do ZSH.
+# Este script perguntará se você deseja definir o ZSH como shell padrão, responda que sim (Y/y).
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)";
-# Este comando mudará o shell padrão para o zsh (faz parte de util-linux-user).
-chsh -s $(which zsh);
 ```
 #### Observação
 A configuração também deve ser feita em outros usuários (como root), caso deseje que eles também utilizem o ZSH.
@@ -239,10 +238,8 @@ sudo apt install -y net-tools nano htop;
 A seguir as funções e aliases que utilizo no meu shell.
 Devem ser adicionadas no final do arquivo .bashrc (caso utilize o BASH) ou .zshrc (caso utilize o ZSH).
 ```bash
-# A função la() já vem implementada no ZSH. Defino ela somente em .bashrc
-la() { ls -a "$@"; }
 # wtnt abrirá uma nova aba no Windows terminal no diretório passado como argumento. 
-# Utilizará o perfil padrão e abrirái o diretória atual caso seja passado um diretório inválido
+# Utilizará o perfil padrão e abrirá o diretório atual caso seja passado um diretório inválido
 wtnt() {
   # Testa se argumento foi passado.
   if [ $# -ge 1 ]
