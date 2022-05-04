@@ -162,19 +162,39 @@ git config --global user.email "email here";
 git config --global init.defaultBranch main;
 ```
 ### Node.js
+Utilizo o [nvm](https://github.com/nvm-sh/nvm) para gerenciar as versões do node e npm instaladas na minha máquina. Sendo assim, rodo o script de instalação disponibilizado no repositõrio oficial:
 ```bash
-# Para Ubuntu/Debian rodamos:
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -;
-sudo apt-get install -y nodejs;
-# Para outras versões consulte https://nodejs.org/en/download/package-manager/
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;
+# Comando source para que o nvm passe a ser reconhecido após a configuração feita pelo script.
+source ~/.zshrc;
+# O comando a seguir instala a versão LTS do node.
+nvm install --lts;
 ```
-Mais detalhes para a instalação no Ubuntu pode ser encontrados [aqui](https://github.com/nodesource/distributions/blob/master/README.md#debinstall).
+Feito isso, adiciono o código a seguir no arquivo ~/.zshrc para que o nvm reconheça arquivos .nvmrc automaticamente:
+```bash
+# place this after nvm initialization!
+# zsh only!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
 
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 ```
-[interop]
-appendWindowsPath = false
-```
-Consulte <a href="https://docs.microsoft.com/pt-br/windows/wsl/wsl-config" target="_blank">este site</a> para mais informações sobre configuração do arquivo wsl.conf.
 
 ### Haskell
 ```bash
