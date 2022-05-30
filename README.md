@@ -260,56 +260,9 @@ Devem ser adicionadas no final do arquivo .bashrc (caso utilize o BASH) ou .zshr
 ```bash
 # wtnt abrirá uma nova aba no Windows terminal no diretório passado como argumento. 
 # Utilizará o perfil padrão e abrirá o diretório atual caso seja passado um diretório inválido
-wtnt() {
-  # Testa se argumento foi passado.
-  if [ $# -ge 1 ]
-  then
-    # Checa se argumento é um diretório válido.
-    if [ -d "$@" ]
-    then
-      # Checa se argumento é um symlink.
-      if [ -L "$@" ];
-      then
-        # Caso argumento seja um symlink, apresenta mensagem de erro. wt.exe não pode ser iniciado com symlink.
-        echo "wtnt: cannot start Windows Terminal using a symlink as directory.";
-        return;
-      fi
-      # Se argumento for um diretório válido, abre wt.exe no diretório informado. 
-      wt.exe -w 0 nt -d "$@";
-      return;
-    else
-      # Se argumento não for um diretório válido, exibe mensagem de erro.
-      echo "wtnt: cannot start a Windows Terminal tab at \"$@\".";
-      return;
-    fi
-  else
-    # Caso nenhum argumento seja passado, abre wt.exe no diretório atual.
-    wt.exe -w 0 nt -d .;
-    return;
-  fi
-}
+alias wtnt="wt.exe -w 0 nt -d ."
 # wtsp realiza o mesmo que wtnt só que abre a nova instância de wt.exe em split-pane.
-wtsp() {
-  if [ $# -ge 1 ]
-  then
-    if [ -d "$@" ]
-    then
-      if [ -L "$@" ];
-      then
-        echo "wtnt: cannot start Windows Terminal using a symlink as directory.";
-        return;
-      fi
-      wt.exe -w 0 sp -d "$@";
-      return;
-    else
-      echo "wtnt: cannot start Windows Terminal at \"$@\".";
-      return;
-    fi
-  else
-    wt.exe -w 0 sp -d .;
-    return;
-  fi
-}
+alias wtsp="wt.exe -w 0 sp -d ."
 exp() {
   if [ $# -ge 1 ]
   then
