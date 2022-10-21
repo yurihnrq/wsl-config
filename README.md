@@ -4,7 +4,30 @@ Este repositório contém o passo a passo para as configurações que devo reali
 
 ## Sumário <!-- omit in toc -->
 
-a
+- [Instalação e configuração inicial](#instalação-e-configuração-inicial)
+  - [Habilitar WSL no Windows](#habilitar-wsl-no-windows)
+- [Configuração do Windows Terminal](#configuração-do-windows-terminal)
+  - [Dracula Theme](#dracula-theme)
+  - [Profile JSON](#profile-json)
+- [Instalação do ZSH](#instalação-do-zsh)
+  - [Spaceship Theme](#spaceship-theme)
+    - [Habilitar tema](#habilitar-tema)
+    - [Personalização do tema](#personalização-do-tema)
+  - [YuriHnrq's Theme](#yurihnrqs-theme)
+  - [Plugins](#plugins)
+- [Instalação de pacotes](#instalação-de-pacotes)
+  - [Git & GitHub](#git--github)
+  - [Node.js](#nodejs)
+  - [PostgreSQL](#postgresql)
+  - [Haskell](#haskell)
+  - [R](#r)
+  - [C/C++](#cc)
+  - [Java SDK](#java-sdk)
+  - [Android SDK](#android-sdk)
+  - [Pacotes de utilitários](#pacotes-de-utilitários)
+- [Funções e aliases](#funções-e-aliases)
+- [Acesso LAN](#acesso-lan)
+- [SSH Agent](#ssh-agent)
 
 ## Instalação e configuração inicial
 
@@ -120,6 +143,27 @@ export SPACESHIP_PACKAGE_SHOW=false
 export SPACESHIP_CHAR_SYMBOL="zsh ➜ "
 ```
 
+### YuriHnrq's Theme
+
+Este é um tema que eu mesmo criei. Na verdade, não passa de uma leve modificação sobre o [Robbyrussell Theme](https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/robbyrussell.zsh-theme).
+
+Para adicioná-lo, é necessário criar um arquivo chamado `yurihnrq.zsh-theme` no diretório `~/.oh-my-zsh/themes`. Neste arquivo, insira o seguinte conteúdo:
+
+```bash
+PROMPT='%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+PROMPT_ARROW=$'\n%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )'
+PROMPT+="$PROMPT_ARROW"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+```
+
+Agora basta editar o arquivo `~/.zshrc` e alterar a linha `ZSH_THEME="robbyrussell"` para `ZSH_THEME="yurihnrq"`. Seu prompt ficará com a seguinte aparência:
+
+![YuriHnrq's Theme](images/yurihnrq-theme.png)  
+
 ### Plugins
 
 Eu utilizo dois plugins: [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) que nos fornece um autocomplete baseado no histórico de comandos do shell e [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) que adiciona syntax highlighting ao ZSH.
@@ -200,6 +244,42 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+```
+
+### PostgreSQL
+
+```bash
+sudo apt install -y postgresql postgresql-contrib;
+```
+
+Para obter o local do arquivo de configuração de autenticação, utilize:
+
+```bash
+sudo -u postgres psql -c "SHOW hba_file;";
+```
+
+`pg_hba.conf` é onde se configura quais hosts podem realizar conexões com banco. `trust` permite conexão, `md5` irá exigir uma senha e `peer` utiliza o mesmo usuário do sistema operacional para autenticar (conexão local).
+
+Para obter o local do arquivo de configuração do servidor, utilize:
+
+```bash
+sudo -u postgres psql -c "SHOW config_file;";
+```
+
+Para conctar-se ao banco, utilize:
+
+```bash
+# Este método irá exigir a senha do usuário postgres.
+psql -U postgres -h 127.0.0.1;
+
+# Este método irá exigir a senha do usuário do sistema.
+sudo -u postgres psql;
+```
+
+Para trocar a senha do usuário postgres, conecte-se ao banco e utilize:
+
+```bash
+ALTER USER user_name WITH PASSWORD '<new-password>';
 ```
 
 ### Haskell
@@ -443,7 +523,7 @@ Para que o agente SSH inicie a carregue automaticamente suas chaves, adicione o 
 ```bash
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval `ssh-agent -s` > /dev/null 2>&1
-  # Aqui você adiciona cada uma das chaves que quer que sejam adicionadas.
+  # Aqui você adiciona cada uma das chaves que deseja carregar no agente.
   ssh-add ~/.ssh/id_github > /dev/null 2>&1
 fi
 ```
