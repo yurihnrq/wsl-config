@@ -1,39 +1,10 @@
-# Configuração do Ubuntu no WSL
+# Configuração do Ubuntu no WSL <!-- omit in toc -->
 
 Este repositório contém o passo a passo para as configurações que devo realizar para configurar um ambiente de desenvolvimento no WSL utilizando o Ubuntu como distribuição Linux.
 
-## Sumário
+## Sumário <!-- omit in toc -->
 
-- [Configuração do Ubuntu no WSL](#configuração-do-ubuntu-no-wsl)
-  - [Sumário](#sumário)
-  - [Instalação e configuração inicial](#instalação-e-configuração-inicial)
-    - [Habilitar WSL no Windows](#habilitar-wsl-no-windows)
-  - [Configuração do Windows Terminal](#configuração-do-windows-terminal)
-    - [Dracula Theme](#dracula-theme)
-    - [Profile JSON](#profile-json)
-  - [Instalação do ZSH](#instalação-do-zsh)
-      - [Observação](#observação)
-    - [Spaceship Theme](#spaceship-theme)
-      - [Habilitar tema](#habilitar-tema)
-      - [Observação](#observação-1)
-      - [Personalização do tema](#personalização-do-tema)
-    - [Plugins](#plugins)
-  - [Instalação de pacotes](#instalação-de-pacotes)
-      - [Observação](#observação-2)
-    - [Git & GitHub](#git--github)
-    - [Node.js](#nodejs)
-    - [Haskell](#haskell)
-    - [R](#r)
-    - [C/C++](#cc)
-    - [Java SDK](#java-sdk)
-    - [Android SDK](#android-sdk)
-    - [Pacotes de utilitários](#pacotes-de-utilitários)
-  - [Funções e aliases](#funções-e-aliases)
-  - [Acesso LAN](#acesso-lan)
-      - [Observação](#observação-3)
-  - [SSH Agent](#ssh-agent)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Sumário gerado com ajuda de markdown-toc.</a></i></small>
+a
 
 ## Instalação e configuração inicial
 
@@ -57,7 +28,7 @@ Para outras opções de distruibuição Linux, você pode verificar estes links:
 ### Dracula Theme
 
 Primeiramente, instalo o tema Dracula no meu Windows Terminal.
-O passo a passo para este processo pode ser encontrado no <a href="https://draculatheme.com/windows-terminal" target="_blank">site oficial</a>.
+O passo a passo para este processo pode ser encontrado no [site oficial]("https://draculatheme.com/windows-terminal").
 
 ### Profile JSON
 
@@ -90,14 +61,12 @@ sudo apt install -y git zsh;
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)";
 ```
 
-#### Observação
-
 A configuração também deve ser feita em outros usuários (como root), caso deseje que eles também utilizem o ZSH.
 
 ### Spaceship Theme
 
 Este é um ótimo tema para utilizarmos no ZSH.
-A instruções para sua instalação pode ser encontrada no <a href="https://github.com/spaceship-prompt/spaceship-prompt" target="_blank">repositório oficial</a>.
+A instruções para sua instalação pode ser encontrada no [repositório oficial](https://github.com/spaceship-prompt/spaceship-prompt).
 Caso não queira perder tempo entendendo como funciona o processo de instalação, apenas rode os comandos a seguir:
 
 ```bash
@@ -117,8 +86,6 @@ Recomendo fazer um backup do arquivo .zshrc antes de começarmos a modificá-lo.
 cp ~/.zshrc ~/.zshrc.bak;
 ```
 
-#### Observação
-
 O seguinte erro pode ser apresentado quando utilizar o ZSH ao habiltiar o tema Spaceship:
 
 ```bash
@@ -129,7 +96,7 @@ Este erro está relacionado a obtenção do nível de energia da máquina. Isto 
 
 #### Personalização do tema
 
-Você pode personalizar o Spaceship Theme inserindo configurações logo abaixo da definição do tema no arquivo .zshrc do usuário desejado. As opções disponíveis para customização estão listadas no <a href="https://spaceship-prompt.sh/options/" target="_blank">site oficial</a>.
+Você pode personalizar o Spaceship Theme inserindo configurações logo abaixo da definição do tema no arquivo .zshrc do usuário desejado. As opções disponíveis para customização estão listadas no [site oficial](https://spaceship-prompt.sh/options/).
 A configuração que eu utilizo é a seguinte:
 
 ```bash
@@ -176,8 +143,6 @@ plugins=( [plugins...] zsh-syntax-highlighting zsh-autosuggestions)
 ## Instalação de pacotes
 
 Nesta seção disponilizo os scripts/comandos que utilizo para instalação e configuração de pacotes que utilizo ou posso vir a utilizar no meu sistema.
-
-#### Observação
 
 Nos scripts a seguir, as configurações que exigem nome de usuário, email e demais informacões pessoais devem ser preenchidas. Se for utilizar os scripts a seguir, modifique-os para seu próprio uso.
 
@@ -378,94 +343,92 @@ code-at() {
 
 O WSL vem por padrão com uma interface de rede NAT. Isso significa que ele pode acessar recursos exteros, mas tem seu IP mascarado pelo host. Desse modo, computadores na LAN não conseguem se comunicar com o WSL.
 
-A solução para este problema foi disponibilizada por um usuário <a href="https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723" target="_blank">nesta issue</a> no GitHub.
+A solução para este problema foi disponibilizada por um usuário [nesta issue](https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723) no GitHub.
 Para criar uma solução de fácil acesso, sigo os seguintes passos:
 
 1) Configuro e salvo o script em um diretório do Windows. A versão do script que utilizo eleva o processo do Powershell para administrador quando necessário:
 
-```bash
-If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {   
-  $arguments = "& '" + $myinvocation.mycommand.definition + "'"
-  Start-Process powershell -Verb runAs -ArgumentList $arguments
-  Break
-}
+    ```bash
+    If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {   
+      $arguments = "& '" + $myinvocation.mycommand.definition + "'"
+      Start-Process powershell -Verb runAs -ArgumentList $arguments
+      Break
+    }
 
-$remoteport = bash.exe -c "ifconfig eth0 | grep 'inet '"
-$found = $remoteport -match '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}';
+    $remoteport = bash.exe -c "ifconfig eth0 | grep 'inet '"
+    $found = $remoteport -match '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}';
 
-if ($found) {
-  $remoteport = $matches[0];
-}
-else {
-  Write-Output "IP address could not be found";
-  exit;
-}
+    if ($found) {
+      $remoteport = $matches[0];
+    }
+    else {
+      Write-Output "IP address could not be found";
+      exit;
+    }
 
-#Here you define which ports you want to be forwarded.
-#3000 && 3001: React.js and Node.js; 8081: Metro Bundler
-$ports=@(3000, 3001, 8081);
+    #Here you define which ports you want to be forwarded.
+    #3000 && 3001: React.js and Node.js; 8081: Metro Bundler
+    $ports=@(3000, 3001, 8081);
 
-$ports_a = $ports -join ",";
+    $ports_a = $ports -join ",";
 
-#Remove Firewall Exception Rules
-Invoke-Expression "Remove-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' ";
+    #Remove Firewall Exception Rules
+    Invoke-Expression "Remove-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' ";
 
-#adding Exception Rules for inbound and outbound Rules
-Invoke-Expression "New-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' -Direction Outbound -LocalPort $ports_a -Action Allow -Protocol TCP";
-Invoke-Expression "New-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' -Direction Inbound -LocalPort $ports_a -Action Allow -Protocol TCP";
+    #adding Exception Rules for inbound and outbound Rules
+    Invoke-Expression "New-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' -Direction Outbound -LocalPort $ports_a -Action Allow -Protocol TCP";
+    Invoke-Expression "New-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' -Direction Inbound -LocalPort $ports_a -Action Allow -Protocol TCP";
 
-Invoke-Expression "netsh interface portproxy reset";
+    Invoke-Expression "netsh interface portproxy reset";
 
-for ($i = 0; $i -lt $ports.length; $i++) {
-  $port = $ports[$i];
-  Invoke-Expression "netsh interface portproxy add v4tov4 listenport=$port connectport=$port connectaddress=$remoteport";
-  Invoke-Expression "netsh advfirewall firewall add rule name=$port dir=in action=allow protocol=TCP localport=$port";
-}
+    for ($i = 0; $i -lt $ports.length; $i++) {
+      $port = $ports[$i];
+      Invoke-Expression "netsh interface portproxy add v4tov4 listenport=$port connectport=$port connectaddress=$remoteport";
+      Invoke-Expression "netsh advfirewall firewall add rule name=$port dir=in action=allow protocol=TCP localport=$port";
+    }
 
-Invoke-Expression "netsh interface portproxy show v4tov4"
-```
+    Invoke-Expression "netsh interface portproxy show v4tov4"
+    ```
 
 2) Permito que o Powershell execute scripts assinados rodando o seguinte comando como administrador:
 
-```powershell
-# Este comando é válido somente no Powershell 5.1.
-set-executionpolicy remotesigned;
-```
+    ```powershell
+    # Este comando é válido somente no Powershell 5.1.
+    set-executionpolicy remotesigned;
+    ```
 
 3) Crio um alias no WSL que execute o script que realizar o port forwarding:
 
-```bash
-# Substitua <script-start> pelo path do script que realizar a configuração no Windows.
-alias pfstart="powershell.exe \"& '<script-start>'\" > ~/.netpf.log"
-```
+    ```bash
+    # Substitua <script-start> pelo path do script que realizar a configuração no Windows.
+    alias pfstart="powershell.exe \"& '<script-start>'\" > ~/.netpf.log"
+    ```
 
-Agora sempre que executar netpf no shell do WSL, o script será executado e irá fazer com que computadores LAN acessem o WSL utilizando o IP do Windows e as portas especificadas no script.
+    Agora sempre que executar netpf no shell do WSL, o script será executado e irá fazer com que computadores LAN acessem o WSL utilizando o IP do Windows e as portas especificadas no script.
 
 4) Crio um arquivo de script que reseta as configurações:
 
-```powershell
-If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {   
-  $arguments = "& '" + $myinvocation.mycommand.definition + "'"
-  Start-Process powershell -Verb runAs -ArgumentList $arguments
-  Break
-}
+    ```powershell
+    If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {   
+      $arguments = "& '" + $myinvocation.mycommand.definition + "'"
+      Start-Process powershell -Verb runAs -ArgumentList $arguments
+      Break
+    }
 
-#Remove Firewall Exception Rules
-Invoke-Expression "Remove-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' ";
+    #Remove Firewall Exception Rules
+    Invoke-Expression "Remove-NetFireWallRule -DisplayName 'WSL 2 Firewall Unlock' ";
 
-Invoke-Expression "netsh interface portproxy reset";
+    Invoke-Expression "netsh interface portproxy reset";
 
-Invoke-Expression "netsh interface portproxy show v4tov4";
-```
+    Invoke-Expression "netsh interface portproxy show v4tov4";
+    ```
 
 5) Crio um alias no WSL que execute o script que deleta as configuracões de port forwarding:
 
-```bash
-# Substitua <script-start> pelo path do script que 'reseta' a configuração no Windows.
-alias pfreset="powershell.exe \"& '<script-reset>'\" > ~/.netpf.log"
-```
-
-#### Observação
+    ```bash
+    # Substitua <script-start> pelo path do script que 'reseta' a configuração no Windows.
+    alias pfreset="powershell.exe \"& '<script-reset>'\" > ~/.netpf.log"
+    ```
 
 Você deve ter o pacote net-tools instalado na sua distribuição Linux no WSL para que o script funcione. Para instalar o pacote utilize:
 
